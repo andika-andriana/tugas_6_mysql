@@ -1,0 +1,175 @@
+**Tugas 6**
+
+1. Buat tabel latihan_1 dengan dua kolom, a dan b dengan spesifikasi:
+    - Kolom a di definisikan sebagai INTEGER, memiliki atribut UNSIGNED, di set sebagai PRIMARY KEY dan penomoran otomatis AUTO_INCREMENT.
+    - Kolom b di definisikan sebagai VARCHAR yang sanggup menampung maksimal 10 karakter. Jika kolom ini tidak diisi, string ‘merdeka’ akan menjadi string default. Kolom b juga tidak bisa diisi nilai NULL.
+    - Tabel latihan_1 menggunakan storage engine MyISAM serta charset ascii. Nomor urut auto increment dimulai dari 100.
+    - Silahkan buat tabel latihan_1 dengan spesifikasi diatas sebelum lanjut ke nomor 2.
+
+            MariaDB [tugas_6_mysql]> CREATE TABLE latihan_1(
+                -> a INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+                -> b VARCHAR(10) DEFAULT 'Merdeka' NOT NULL)
+                -> AUTO_INCREMENT = 100
+                -> ENGINE = MyISAM
+                -> CHARACTER SET ascii;
+		
+	    MariaDB [tugas_6_mysql]> DESC latihan_1;
+	    +-------+------------------+------+-----+---------+----------------+
+	    | Field | Type             | Null | Key | Default | Extra          |
+	    +-------+------------------+------+-----+---------+----------------+
+	    | a     | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+	    | b     | varchar(10)      | NO   |     | Merdeka |                |
+	    +-------+------------------+------+-----+---------+----------------+
+	    2 rows in set (0.029 sec)
+
+2. Ubah storage engine tabel latihan_1 menjadi InnoDB.
+
+        MariaDB [tugas_6_mysql]> ALTER TABLE latihan_1 ENGINE = INNODB;
+        Query OK, 0 rows affected (0.439 sec)
+        Records: 0  Duplicates: 0  Warnings: 0
+        
+        MariaDB [tugas_6_mysql]> SHOW CREATE TABLE latihan_1 \G
+        *************************** 1. row ***************************
+               Table: latihan_1
+        Create Table: CREATE TABLE `latihan_1` (
+          `a` int(10) unsigned NOT NULL AUTO_INCREMENT,
+          `b` varchar(10) NOT NULL DEFAULT 'Merdeka',
+          PRIMARY KEY (`a`)
+        ) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=ascii
+        1 row in set (0.002 sec)
+
+3. Ubah nama kolom b menjadi c dari tabel latihan_1, dimana kolom c ini juga memiliki tipe data yang sama dengan kolom b (termasuk atribut).
+
+        MariaDB [tugas_6_mysql]> DESC latihan_1;
+        +-------+------------------+------+-----+---------+----------------+
+        | Field | Type             | Null | Key | Default | Extra          |
+        +-------+------------------+------+-----+---------+----------------+
+        | a     | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+        | b     | varchar(10)      | NO   |     | Merdeka |                |
+        +-------+------------------+------+-----+---------+----------------+
+        2 rows in set (0.029 sec)
+        
+        MariaDB [tugas_6_mysql]> ALTER TABLE latihan_1 CHANGE b c VARCHAR(10) NOT NULL DEFAULT 'Merdeka';
+        Query OK, 0 rows affected (0.093 sec)
+        Records: 0  Duplicates: 0  Warnings: 0
+        
+        MariaDB [tugas_6_mysql]> DESC latihan_1;
+        +-------+------------------+------+-----+---------+----------------+
+        | Field | Type             | Null | Key | Default | Extra          |
+        +-------+------------------+------+-----+---------+----------------+
+        | a     | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+        | c     | varchar(10)      | NO   |     | Merdeka |                |
+        +-------+------------------+------+-----+---------+----------------+
+        2 rows in set (0.030 sec)
+
+4. Tambah kolom baru bernama b ke dalam tabel latihan_1. Kolom b di definisikan dengan tipe data DATE. Jika kolom b tidak diisi nilai, tanggal 01-01-2018 akan menjadi nilai default. Tempatkan kolom b setelah kolom a. Artinya, setelah langkah ini dijalankan tabel latihan_1 akan memiliki 3 kolom: a, b dan c.
+
+	MariaDB [tugas_6_mysql]> ALTER TABLE latihan_1 ADD COLUMN b DATE DEFAULT '2018-01-01' AFTER a;
+   	Query OK, 0 rows affected (0.106 sec)
+    	Records: 0  Duplicates: 0  Warnings: 0
+    
+    	MariaDB [tugas_6_mysql]> DESC latihan_1;
+    	+-------+------------------+------+-----+------------+----------------+
+    	| Field | Type             | Null | Key | Default    | Extra          |
+    	+-------+------------------+------+-----+------------+----------------+
+    	| a     | int(10) unsigned | NO   | PRI | NULL       | auto_increment |
+    	| b     | date             | YES  |     | 2018-01-01 |                |
+    	| c     | varchar(10)      | NO   |     | Merdeka    |                |
+    	+-------+------------------+------+-----+------------+----------------+
+    	3 rows in set (0.028 sec)
+
+5. Buat tabel latihan_2 yang memiliki struktur sama persis seperti tabel latihan_1.
+
+        MariaDB [tugas_6_mysql]> DESC latihan_1;
+        +-------+------------------+------+-----+------------+----------------+
+        | Field | Type             | Null | Key | Default    | Extra          |
+        +-------+------------------+------+-----+------------+----------------+
+        | a     | int(10) unsigned | NO   | PRI | NULL       | auto_increment |
+        | b     | date             | YES  |     | 2018-01-01 |                |
+        | c     | varchar(10)      | NO   |     | Merdeka    |                |
+        +-------+------------------+------+-----+------------+----------------+
+        3 rows in set (0.028 sec)
+        
+        MariaDB [tugas_6_mysql]> CREATE TABLE latihan_2 LIKE latihan_1;
+        Query OK, 0 rows affected (0.267 sec)
+        
+        MariaDB [tugas_6_mysql]> DESC latihan_2;
+        +-------+------------------+------+-----+------------+----------------+
+        | Field | Type             | Null | Key | Default    | Extra          |
+        +-------+------------------+------+-----+------------+----------------+
+        | a     | int(10) unsigned | NO   | PRI | NULL       | auto_increment |
+        | b     | date             | YES  |     | 2018-01-01 |                |
+        | c     | varchar(10)      | NO   |     | Merdeka    |                |
+        +-------+------------------+------+-----+------------+----------------+
+        3 rows in set (0.030 sec)
+
+6. Ubah storage engine tabel latihan_2 menjadi MEMORY.
+
+        MariaDB [tugas_6_mysql]> SHOW CREATE TABLE latihan_2;
+        +-----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+        | Table     | Create Table                                                                                                                                                                                                        |
+        +-----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+        | latihan_2 | CREATE TABLE `latihan_2` (
+          `a` int(10) unsigned NOT NULL AUTO_INCREMENT,
+          `b` date DEFAULT '2018-01-01',
+          `c` varchar(10) NOT NULL DEFAULT 'Merdeka',
+          PRIMARY KEY (`a`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=ascii |
+        +-----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+        1 row in set (0.000 sec)
+        
+        MariaDB [tugas_6_mysql]> ALTER TABLE latihan_2 ENGINE = MEMORY;
+        Query OK, 0 rows affected (0.411 sec)
+        Records: 0  Duplicates: 0  Warnings: 0
+        
+        MariaDB [tugas_6_mysql]> SHOW CREATE TABLE latihan_2;
+        +-----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+        | Table     | Create Table                                                                                                                                                                                                        |
+        +-----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+        | latihan_2 | CREATE TABLE `latihan_2` (
+          `a` int(10) unsigned NOT NULL AUTO_INCREMENT,
+          `b` date DEFAULT '2018-01-01',
+          `c` varchar(10) NOT NULL DEFAULT 'Merdeka',
+          PRIMARY KEY (`a`)
+        ) ENGINE=MEMORY DEFAULT CHARSET=ascii |
+        +-----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+        1 row in set (0.001 sec)
+
+7. Ubah nama tabel latihan_2 menjadi latihan_3.
+
+        MariaDB [tugas_6_mysql]> ALTER TABLE latihan_2 RENAME TO latihan_3;
+        Query OK, 0 rows affected (0.002 sec)
+        
+        MariaDB [tugas_6_mysql]> DESC latihan_2;
+        ERROR 1146 (42S02): Table 'tugas_6_mysql.latihan_2' doesn't exist
+        
+        MariaDB [tugas_6_mysql]> DESC latihan_3;
+        +-------+------------------+------+-----+------------+----------------+
+        | Field | Type             | Null | Key | Default    | Extra          |
+        +-------+------------------+------+-----+------------+----------------+
+        | a     | int(10) unsigned | NO   | PRI | NULL       | auto_increment |
+        | b     | date             | YES  |     | 2018-01-01 |                |
+        | c     | varchar(10)      | NO   |     | Merdeka    |                |
+        +-------+------------------+------+-----+------------+----------------+
+        3 rows in set (0.028 sec)
+
+8. Buat temporary table dengan nama latihan_4. Tabel ini berisi 1 kolom a sebagai TIMESTAMP.
+
+        MariaDB [tugas_6_mysql]> CREATE TEMPORARY TABLE latihan_4(a TIMESTAMP);
+        Query OK, 0 rows affected (0.083 sec)
+        
+        MariaDB [tugas_6_mysql]> DESC latihan_4;
+        +-------+-----------+------+-----+---------------------+-------------------------------+
+        | Field | Type      | Null | Key | Default             | Extra                         |
+        +-------+-----------+------+-----+---------------------+-------------------------------+
+        | a     | timestamp | NO   |     | current_timestamp() | on update current_timestamp() |
+        +-------+-----------+------+-----+---------------------+-------------------------------+
+        1 row in set (0.030 sec)
+
+9. Hapus tabel latihan_1, latihan_3 dan latihan_4 dalam 1 perintah query.
+
+        MariaDB [tugas_6_mysql]> DROP TABLE IF EXISTS latihan_1, latihan_3, latihan_4;
+        Query OK, 0 rows affected (0.317 sec)
+        
+        MariaDB [tugas_6_mysql]> SHOW TABLES;
+        Empty set (0.001 sec)
